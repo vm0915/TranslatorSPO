@@ -7,14 +7,11 @@ import java.util.regex.Pattern;
  * Created by Raymond on 09.10.2018.
  */
 public class Lexer {
-    private String code = "for  !";
+    private String code = "for(i=1;i<5;i=i+1){a=((((5)+((32)+3)*2)));}$";
     private StringBuilder tokenBuild = new StringBuilder();
     private boolean previousSuccess = false;
     private ArrayList<Token> listOfTokens = new ArrayList<>();
-    private static final char END_SYMBOL = '!';
-
-
-
+    private static final char END_SYMBOL = '$';
     private Map<String, Pattern> tokens = new HashMap<>();
 
     public Lexer(){
@@ -46,7 +43,10 @@ public class Lexer {
                     token.setType(getTokenType(tokenBuild.toString()));
                     listOfTokens.add(token);
                     previousSuccess = false;
-                    if(code.charAt(i) == END_SYMBOL){break;}
+                    if(code.charAt(i) == END_SYMBOL){
+
+                        break;
+                    }
                     i--;
                 }
                 tokenBuild.setLength(0);
@@ -56,11 +56,18 @@ public class Lexer {
             else {previousSuccess = true;}
             if(tokenBuild.length() != 0){k++;}
         }
+        Token token1 = new Token();
+        token1.setValue("$");
+        token1.setType("$");
+        listOfTokens.add(token1);
+
         for(Token token: listOfTokens){
             System.out.print(token.getValue());
             System.out.print(" ");
             System.out.println(token.getType());
         }
+        System.out.println("KONEC LEXERA");
+        Parser p = new Parser(listOfTokens);
     }
 
     private boolean checkBuildForToken(){
