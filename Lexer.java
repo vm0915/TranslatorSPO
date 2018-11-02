@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * Created by Raymond on 09.10.2018.
  */
 public class Lexer {
-    private String code = "for(i=1;i<5;i=i+1){a=((((5)+((32)+3)*2)));}$";
+    private String code ;
     private StringBuilder tokenBuild = new StringBuilder();
     private boolean previousSuccess = false;
     private ArrayList<Token> listOfTokens = new ArrayList<>();
@@ -27,11 +27,11 @@ public class Lexer {
         tokens.put("DEL",Pattern.compile("^[;]$"));
         tokens.put("L_C",Pattern.compile("^[{]$"));
         tokens.put("R_C",Pattern.compile("^[}]$"));
-        extractTokens();
+        //extractTokens();
     }
 
 
-    private void extractTokens(){
+    public ArrayList<Token> extractTokens(String code){
         int k = 0;
         for(int i = 0; i < code.length(); i++){
             if(i < code.length()){tokenBuild.append(code.charAt(i));}
@@ -62,12 +62,13 @@ public class Lexer {
         listOfTokens.add(token1);
 
         for(Token token: listOfTokens){
-            System.out.print(token.getValue());
-            System.out.print(" ");
-            System.out.println(token.getType());
+            //System.out.print(token.getValue());
+            //System.out.print(" ");
+            //System.out.println(token.getType());
         }
-        System.out.println("KONEC LEXERA");
-        Parser p = new Parser(listOfTokens);
+        //System.out.println("KONEC LEXERA");
+        return listOfTokens;
+
     }
 
     private boolean checkBuildForToken(){
